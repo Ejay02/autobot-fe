@@ -61,6 +61,7 @@ const iconClass = computed(() => {
   color: rgba(0, 0, 0, 0.88);
   font-weight: 400;
   font-size: 14px;
+  z-index: 1001;
 }
 
 .info {

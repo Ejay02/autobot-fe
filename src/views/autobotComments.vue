@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto px-4 py-8" v-if="comments?.length">
-    <router-link to="/autobot/2092" class="mt-4 inline-block text-gray-500">
+    <router-link :to="`/autobot/${autobotId}`" class="mt-4 inline-block text-gray-500">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -17,21 +17,20 @@
       </svg>
     </router-link>
     <div class="bg-white shadow-2xl rounded-lg p-6 mb-6 border">
-      <h2 class="text-xl font-semibold mb-2 text-right">
-        {{ autobot }}
-        Comments for {{ autobot?.name }} ({{ autobot?.username }})
-      </h2>
+      <h2 class="text-xl font-semibold mb-0 text-right">Welcome {{ autobotDetails.name }}</h2>
+
+      <h2 class="text-sm font-semibold mb-2 text-right">What the bots are saying ..</h2>
     </div>
     <div class="bg-white shadow-2xl rounded-lg p-6">
       <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-6">
         <div
           v-for="comment in comments"
           :key="comment.id"
-          class="bg-white shadow-lg rounded-lg p-4 hover:shadow-xl duration-300 hover:bg-gray-400 transition ease-in-out delay-150 hover:-translate-y-0.5 hover:scale-105 border cursor-pointer"
+          class="bg-white shadow-lg rounded-lg p-4 hover:shadow-xl duration-300 hover:bg-gray-400 transition ease-in-out delay-150 hover:-translate-y-0.5 hover:scale-105 border cursor-pointer group text-gray-400"
         >
           <div class="flex flex-col items-center justify-center h-full">
             <span class="text-lg font-medium text-gray-900">{{ comment.name }}</span>
-            <span class="text-xs font-normal text-gray-900">{{ comment.body }}</span>
+            <span class="text-xs font-normal group-hover:text-gray-900">{{ comment.body }}</span>
           </div>
         </div>
       </div>
@@ -44,23 +43,20 @@
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import Empty from '@/components/empty.vue'
 import { useNotifications } from '@/composable/globalAlert.js'
 
 const { notify } = useNotifications()
 
-import { useRouter } from 'vue-router'
+const route = useRoute()
 
-const props = defineProps({
-  postId: {
-    type: String,
-    required: true
-  }
-})
+const postId = parseInt(route.params.postId)
 
-const postId = parseInt(props.postId)
+const autobotId = parseInt(route.params.autobotId)
 
 const comments = ref([])
+const autobotDetails = ref(null)
 
 const fetchComments = async () => {
   try {
@@ -71,7 +67,17 @@ const fetchComments = async () => {
   }
 }
 
+const fetchAutobotDetails = async () => {
+  try {
+    const res = await axios.get(`${import.meta.env.VITE_BE_URL}/api/autobots/${autobotId}`)
+    autobotDetails.value = res.data
+  } catch (error) {
+    notify('Failed to fetch autobot details', 'error')
+  }
+}
+
 onMounted(() => {
   fetchComments()
+  fetchAutobotDetails()
 })
 </script>

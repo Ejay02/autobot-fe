@@ -1,5 +1,4 @@
 <template>
-
   <LoadingScreen v-if="autobotStore?.loading" />
   <div class="container mx-auto px-4 py-8">
     <router-link to="/" class="mt-4 inline-block text-gray-500">
@@ -74,8 +73,8 @@
                 </span>
               </div>
             </div>
-            <!-- msg -->
-            <div class="" @click="() => $router.push(`/post/${post.id}/comments`)">
+
+            <div class="" @click="goToComments(post.id, autobot.id)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -104,7 +103,7 @@
 <script setup>
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAutobotStore } from '../stores/autobot'
 import LoadingScreen from '@/components/loadingScreen.vue'
 import { useNotifications } from '@/composable/globalAlert.js'
@@ -118,6 +117,12 @@ const posts = ref([])
 const autobotId = parseInt(route.params.id)
 
 const openPost = ref(null)
+
+const router = useRouter()
+
+const goToComments = (postId, autobotId) => {
+  router.push({ name: 'comments', params: { postId, autobotId } })
+}
 
 const togglePost = (index) => {
   if (openPost.value === index) {

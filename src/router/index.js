@@ -16,12 +16,9 @@ const router = createRouter({
       component: () => import('@/views/autobotDetails.vue')
     },
     {
-      path: '/post/:postId/comments',
+      path: '/post/:postId/comments/:autobotId',
       name: 'comments',
-      component: () => import('@/views/autobotComments.vue'),
-      props: (route) => ({
-        postId: parseInt(route.params.postId)
-      })
+      component: () => import('@/views/autobotComments.vue')
     }
   ]
 })
