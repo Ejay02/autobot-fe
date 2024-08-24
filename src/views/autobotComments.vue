@@ -70,15 +70,18 @@ const fetchComments = async () => {
     comments.value = res.data
   } catch (error) {
     if (error.response && error.response.status === 429) {
+
+      loading.value = true
+
       notify(
         "Whoa, you're really testing our limits! Take a deep breath and try again later... or just take a nap, we won't judge.",
         'warning'
       )
-      loading.value = true
-      setTimeout(() => {
+
+      setTimeout(async () => {
+        await fetchComments()
+        await fetchAutobotDetails()
         loading.value = false
-        fetchComments()
-        fetchAutobotDetails()
       }, 60000)
     } else {
       // notify(error.message, 'error')
@@ -93,15 +96,17 @@ const fetchAutobotDetails = async () => {
     autobotDetails.value = res.data
   } catch (error) {
     if (error.response && error.response.status === 429) {
+      loading.value = true
+
       notify(
         "Whoa, you're really testing our limits! Take a deep breath and try again later... or just take a nap, we won't judge.",
         'warning'
       )
-      loading.value = true
-      setTimeout(() => {
+
+      setTimeout(async () => {
+        await fetchComments()
+        await fetchAutobotDetails()
         loading.value = false
-        fetchComments()
-        fetchAutobotDetails()
       }, 60000)
     } else {
       notify('Something went wrong, working on it. ⚙️', 'error')

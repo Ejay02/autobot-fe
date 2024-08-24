@@ -134,6 +134,8 @@ const togglePost = (index) => {
   }
 }
 
+
+
 const fetchPosts = async () => {
   try {
     const res = await axios.get(`${import.meta.env.VITE_BE_URL}/api/autobots/${autobotId}/posts`)
@@ -147,10 +149,10 @@ const fetchPosts = async () => {
       )
 
       setTimeout(async () => {
-        loading.value = false
         await fetchPosts()
         await autobotStore.fetchAutobots()
         autobot.value = autobotStore.autobots.find((a) => a.id === autobotId)
+        loading.value = false
       }, 60000)
     } else {
       notify('Something went wrong, working on it. ⚙️', 'error')

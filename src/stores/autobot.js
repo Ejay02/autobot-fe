@@ -86,11 +86,12 @@ export const useAutobotStore = defineStore('autobot', {
         if (error.response && error.response.status === 429) {
           this.rateLimited = true
 
+          this.loading = true
+
           notify(
             "Whoa, you're really testing our limits! Take a deep breath and try again later... or just take a nap, we won't judge.",
             'warning'
           )
-          this.loading = true
           setTimeout(() => {
             this.fetchAutobots()
             this.loading = false
