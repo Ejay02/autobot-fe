@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { useNotifications } from '@/composable/globalAlert'
 import * as vue from 'vue'
 
-// Mock the Notification component
 vi.mock('@/components/alert.vue', () => ({
   default: {
     render: () => vue.h('div', 'Mocked Notification')
@@ -11,16 +10,14 @@ vi.mock('@/components/alert.vue', () => ({
 
 describe('useNotifications', () => {
   beforeEach(() => {
-    // Clear all mocks before each test
     vi.clearAllMocks()
-    // Use fake timers
+
     vi.useFakeTimers()
-    // Clear the document body
+
     document.body.innerHTML = ''
   })
 
   afterEach(() => {
-    // Restore timers after each test
     vi.useRealTimers()
   })
 

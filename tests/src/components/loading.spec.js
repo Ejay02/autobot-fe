@@ -6,7 +6,6 @@ describe('LoadingComponent', () => {
   it('renders the component correctly', () => {
     const wrapper = mount(LoadingComponent)
 
-    // Check if the main container exists and has correct classes
     const mainContainer = wrapper.find('div')
     expect(mainContainer.exists()).toBe(true)
     expect(mainContainer.classes()).toContain('fixed')
@@ -23,16 +22,13 @@ describe('LoadingComponent', () => {
     expect(mainContainer.classes()).toContain('transition-opacity')
     expect(mainContainer.classes()).toContain('duration-300')
 
-    // Check if the spinner exists and has correct classes
     const spinner = wrapper.find('.spinner-border')
     expect(spinner.exists()).toBe(true)
     expect(spinner.classes()).toContain('text-primary')
     expect(spinner.attributes('role')).toBe('status')
 
-    // Check if the sr-only span exists
     expect(wrapper.find('.sr-only').exists()).toBe(true)
 
-    // Check if the loading text exists and has correct content and classes
     const loadingText = wrapper.find('h2')
     expect(loadingText.exists()).toBe(true)
     expect(loadingText.text()).toBe('Loading, stand by...')
