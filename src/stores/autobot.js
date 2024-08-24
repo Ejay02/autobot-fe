@@ -44,15 +44,15 @@ export const useAutobotStore = defineStore('autobot', {
       })
 
       this.socket.on('autobotCount', (data) => {
-        this.autobotCount = data.count
+        this.autobotCount += data.count
       })
 
       this.socket.on('postCount', (data) => {
-        this.postCount = data.count
+        this.postCount += data.count
       })
 
       this.socket.on('commentCount', (data) => {
-        this.commentCount = data.count
+        this.commentCount += data.count
       })
 
       this.socket.on('processCompleted', (data) => {
