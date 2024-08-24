@@ -1,5 +1,5 @@
 <template>
-  <LoadingScreen v-if="autobotStore?.loading" />
+  <LoadingScreen v-if="loading" />
   <div class="container mx-auto px-4 py-8">
     <router-link to="/" class="mt-4 inline-block text-gray-500">
       <svg
@@ -120,6 +120,8 @@ const openPost = ref(null)
 
 const router = useRouter()
 
+const loading = ref(false)
+
 const goToComments = (postId, autobotId) => {
   router.push({ name: 'comments', params: { postId, autobotId } })
 }
@@ -137,7 +139,22 @@ const fetchPosts = async () => {
     const res = await axios.get(`${import.meta.env.VITE_BE_URL}/api/autobots/${autobotId}/posts`)
     posts.value = res.data
   } catch (error) {
-    notify('Something went wrong, working on it. ⚙️', 'error')
+    if (error.response && error.response.status === 429) {
+      loading.value = true
+      notify(
+        "Whoa, you're really testing our limits! Take a deep breath and try again later... or just take a nap, we won't judge.",
+        'warning'
+      )
+
+      setTimeout(async () => {
+        loading.value = false
+        await fetchPosts()
+        await autobotStore.fetchAutobots()
+        autobot.value = autobotStore.autobots.find((a) => a.id === autobotId)
+      }, 60000)
+    } else {
+      notify('Something went wrong, working on it. ⚙️', 'error')
+    }
   }
 }
 
@@ -146,6 +163,7 @@ onMounted(() => {
 })
 
 onMounted(async () => {
+  await autobotStore.fetchAutobots()
   autobot.value = autobotStore.autobots.find((a) => a.id === autobotId)
 })
 </script>
