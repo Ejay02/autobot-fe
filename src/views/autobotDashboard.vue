@@ -22,7 +22,7 @@
               :alt="autobot.name"
               class="w-20 h-20 rounded-full mb-2"
             />
-            <span class="text-lg font-medium text-gray-900">{{ autobot.name }}</span>
+            <span class="text-lg font-medium text-gray-900 text-ellipsis truncate">{{ autobot.name }}</span>
             <span class="text-xs font-normal text-gray-400">{{ autobot.email }}</span>
           </router-link>
         </div>

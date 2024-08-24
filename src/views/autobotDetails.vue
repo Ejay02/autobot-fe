@@ -68,7 +68,7 @@
                 </svg>
               </div>
               <div @click="togglePost(index)" class="text-lg font-medium text-gray-500 ml-2">
-                <span>
+                <span class="">
                   {{ post?.title }}
                 </span>
               </div>
@@ -81,7 +81,7 @@
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="size-5 text-gray-500"
+                class="size-5 text-gray-500 shake"
               >
                 <path
                   stroke-linecap="round"
@@ -134,8 +134,6 @@ const togglePost = (index) => {
   }
 }
 
-
-
 const fetchPosts = async () => {
   try {
     const res = await axios.get(`${import.meta.env.VITE_BE_URL}/api/autobots/${autobotId}/posts`)
@@ -169,3 +167,54 @@ onMounted(async () => {
   autobot.value = autobotStore.autobots.find((a) => a.id === autobotId)
 })
 </script>
+
+<style scoped>
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.zoom-out {
+  animation: zoomOut 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-5px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-5px);
+  }
+  80% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes zoomOut {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.shake:hover {
+  animation: shake 0.5s ease-in-out;
+}
+
+.zoom-out:hover {
+  animation: zoomOut 0.5s ease-in-out;
+}
+</style>

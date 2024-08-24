@@ -30,11 +30,11 @@
         <div
           v-for="comment in comments"
           :key="comment.id"
-          class="bg-white shadow-lg rounded-lg p-4 hover:shadow-xl duration-300 hover:bg-gray-400 transition ease-in-out delay-150 hover:-translate-y-0.5 hover:scale-105 border cursor-pointer group text-gray-400"
+          class="bg-white shadow-lg rounded-lg p-4 hover:shadow-xl duration-300 hover:bg-gray-200 transition ease-in-out delay-150 hover:-translate-y-0.5 hover:scale-105 border cursor-pointer group text-gray-400"
         >
           <div class="flex flex-col items-center justify-center h-full">
             <span class="text-lg font-medium text-gray-900">{{ comment?.name }}</span>
-            <span class="text-xs font-normal group-hover:text-gray-900">{{ comment?.body }}</span>
+            <span class="text-xs font-normal group-hover:text-gray-700">{{ comment?.body }}</span>
           </div>
         </div>
       </div>
