@@ -81,7 +81,7 @@
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="size-5 text-gray-500 shake"
+                class="size-5 text-gray-500 shake zoom-out"
               >
                 <path
                   stroke-linecap="round"
@@ -177,6 +177,19 @@ onMounted(async () => {
   animation: zoomOut 0.5s ease-in-out;
 }
 
+.shake:hover {
+  animation: shake 0.5s ease-in-out;
+}
+
+.zoom-out:hover {
+  animation: zoomOut 0.5s ease-in-out;
+  color: blue;
+}
+
+.zoom-out:hover .shake {
+  color: blue;
+}
+
 @keyframes shake {
   0% {
     transform: translateX(0);
@@ -204,17 +217,11 @@ onMounted(async () => {
   }
   50% {
     transform: scale(1.2);
+   color: blue;
   }
   100% {
     transform: scale(1);
+   color: blue;
   }
-}
-
-.shake:hover {
-  animation: shake 0.5s ease-in-out;
-}
-
-.zoom-out:hover {
-  animation: zoomOut 0.5s ease-in-out;
 }
 </style>
