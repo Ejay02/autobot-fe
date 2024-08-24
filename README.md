@@ -85,7 +85,7 @@ npm run preview
 
 - **Environment Variables**:
 
-  - `VITE_API_BASE_URL`: Base URL for the backend API.
+  - `VITE_BE_URL`: Base URL for the backend API.
 
 
 ## Testing & Deployment
