@@ -17,7 +17,8 @@ export const useAutobotStore = defineStore('autobot', {
     itemsPerPage: 10,
     socket: null,
     loading: false,
-    rateLimited: false
+    rateLimited: false,
+    newlyCreatedAutobots: []
   }),
 
   actions: {
@@ -30,7 +31,8 @@ export const useAutobotStore = defineStore('autobot', {
 
       this.socket.on('newAutobot', (data) => {
         this.autobotCount++
-        this.autobots.push(data)
+        // this.autobots.push(data)
+        this.newlyCreatedAutobots.push(data)
       })
 
       this.socket.on('newPost', (data) => {
@@ -66,6 +68,13 @@ export const useAutobotStore = defineStore('autobot', {
       this.socket.on('disconnect', () => {
         console.log('Disconnected from server')
       })
+    },
+
+    removeFromNewlyCreated(autobotId) {
+      const index = this.newlyCreatedAutobots.findIndex((bot) => bot.id === autobotId)
+      if (index !== -1) {
+        this.newlyCreatedAutobots.splice(index, 1)
+      }
     },
 
     async fetchAutobots() {
